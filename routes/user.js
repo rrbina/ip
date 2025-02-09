@@ -14,7 +14,7 @@ var cypher = require('../models/cypher');
         res.json( {ip:ip[0]['address'] });
         return;
     }).catch(function(err){
-        res.json({msg: 'email repetido'});
+        res.json({msg: 'email not found'});
         return; 
     });             
 }
