@@ -1,0 +1,20 @@
+{
+  "name": "ip",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "private": true,
+  "dependencies": {    
+    "bcryptjs": "2.3.0",   
+    "create-singleton": "0.0.4",
+    "crypto": "1.0.1",
+    "express": "^4.19.2",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",    
+    "sequelize": "3.27.0",
+    "sqlite3": "^5.1.7"
+  }
+}
