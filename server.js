@@ -32,6 +32,8 @@ app.use((req, res, next) => {
 
 app.post('/get-ip', user.getIp);
 
+app.post('/set-ip', user.setIp);
+
 //app.get('/cadastro', user.cadastro);
 
 //app.get('/treta', user.getCredentials);

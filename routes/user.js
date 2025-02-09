@@ -2,9 +2,7 @@ var databaseSingleton = require('../database/database');
 var db = new databaseSingleton().sequelize;
 var cypher = require('../models/cypher');
 
-//user_id: rb
-//token
- module.exports.getIp = function(req, res){
+module.exports.getIp = function(req, res){
     var password_enc = cypher.encrypt(req.body.password);
     var email_enc = cypher.encrypt(req.body.email);
     var query = `select address from ip inner join users on users.id = ip.user_id where users.email like '${email_enc}' and users.password like '${password_enc}'`;
@@ -17,6 +15,34 @@ var cypher = require('../models/cypher');
         res.json({msg: 'email not found'});
         return; 
     });             
+}
+
+module.exports.setIp = function(req, res){
+    var password_enc = cypher.encrypt(req.body.password);
+    var email_enc = cypher.encrypt(req.body.email);
+    var ip = req.body.ip;
+    var query = `select * from users where email like '${email_enc}' and password like '${password_enc}'`;
+
+    db.query(query).spread(function(result, metadata){
+        if(result.lengt == 0)
+        {
+            res.json({msg: 'email not found.'});
+            return;             
+        }
+        var user_id = result[0]['id'];
+        var query = `UPDATE ip SET address = '${ip}' WHERE user_id = ${user_id}`;
+
+        db.query(query).spread(function(result, metadata){
+            res.json( {msg: 'success', worked: true});
+            return; 
+        }).catch(function(err){
+            res.json( {msg: 'error', worked: false});
+            return; 
+        });
+    }).catch(function(err){
+        res.json({msg: 'repeted', worked: false});
+        return; 
+    });                       
 }
 
 module.exports.getCredentials = function(req,res){
